@@ -10,8 +10,9 @@ Version:	2.1.0
 Release:	0.1
 License:	GPL
 Group:		Applications/Networking
-Source0:	http://kent.dl.sourceforge.net/sourceforge/autoindex/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/autoindex/%{name}-%{version}.tar.gz
 # Source0-md5:	f2fc376d4f40c7197d4d3ec036db649e
+URL:		http://autoindex.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.221
 Requires:	apache >= 1.3.33-2
 Requires:	php > 5.0.0
