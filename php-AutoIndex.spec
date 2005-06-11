@@ -25,8 +25,8 @@ A Website Directory Indexer and File Manager (AutoIndex PHP Script).
 Webowy indeks zawarto¶ci katalogów i zarz±dca plików (AutoIndex PHP
 Script).
 
-%define	_sysconfdir /etc/%{name}
-%define _appdir %{_datadir}/%{name}
+%define	_sysconfdir	/etc/%{name}
+%define	_appdir		%{_datadir}/%{name}
 
 %prep
 %setup -q -n %{name}
