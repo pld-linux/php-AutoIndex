@@ -1,7 +1,4 @@
 # TODO: 1. How to deal with generated via web AutoIndex.conf.php file? (now - manually ;)
-#	2. Why %%apache_config_install macro doesn't restart (or reload)
-#	apache when symlink is placed in /etc/httpd/httpd.conf/ directory?
-#	(and package doesn't work after installation).
 #	
 Summary:	A Website Directory Indexer and File Manager (AutoIndex PHP Script)
 Summary(pl):	Webowy indeks zawarto¶ci katagów i zarz±dca plików (AutoIndex PHP Script)
