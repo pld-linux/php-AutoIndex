@@ -3,12 +3,12 @@
 Summary:	A Website Directory Indexer and File Manager (AutoIndex PHP Script)
 Summary(pl):	Webowy indeks zawarto¶ci katagów i zarz±dca plików (AutoIndex PHP Script)
 Name:		AutoIndex
-Version:	2.1.0
+Version:	2.1.1
 Release:	0.1
 License:	GPL
 Group:		Applications/Networking
 Source0:	http://dl.sourceforge.net/autoindex/%{name}-%{version}.tar.gz
-# Source0-md5:	f2fc376d4f40c7197d4d3ec036db649e
+# Source0-md5:	e9a16ea877a0d1b790216ae22ab19172
 URL:		http://autoindex.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.221
 Requires:	apache >= 1.3.33-2
