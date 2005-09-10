@@ -1,0 +1,94 @@
+--- ./index.php~	2005-07-07 02:08:44.000000000 +0300
++++ ./index.php	2005-09-10 17:30:46.000000000 +0300
+@@ -39,8 +39,9 @@
+ define('CONFIG_GENERATOR', 'config.php');
+ 
+ //paths for files that will be included
+-define('PATH_TO_CLASSES', './classes/');
+-define('PATH_TO_LANGUAGES', './languages/');
++define('_APPDIR', dirname(__FILE__));
++define('PATH_TO_CLASSES', _APPDIR . '/classes/');
++define('PATH_TO_LANGUAGES', _APPDIR . '/languages/');
+ define('LANGUAGE_FILE_EXT', '.txt');
+ 
+ //filenames of template files
+--- ./hidden_files~	2005-02-09 03:06:36.000000000 +0200
++++ ./hidden_files	2005-09-10 17:32:34.000000000 +0300
+@@ -5,3 +5,5 @@
+ index_icons
+ languages
+ templates
++*~
++.*
+--- ./templates/default/global_header.tpl	2005-02-05 20:37:16.000000000 +0200
++++ /tmp/global_header.tpl	2005-09-10 17:37:46.000000000 +0300
+@@ -3,8 +3,8 @@
+ <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{config:language}">
+ <head>
+ 	<title>{words:index of} {info:dir}</title>
+-	<link href="{config:template}default.css" rel="stylesheet" title="AutoIndex Default" type="text/css" />
+-	<link href="{config:template}alternate.css" rel="alternate stylesheet" title="AutoIndex Alternate" type="text/css" />
++	<link href="{config:template_path}default.css" rel="stylesheet" title="AutoIndex Default" type="text/css" />
++	<link href="{config:template_path}alternate.css" rel="alternate stylesheet" title="AutoIndex Alternate" type="text/css" />
+ </head>
+ 
+ <body class="autoindex_body">
+--- ./templates/simple_image_gallery/global_header.tpl	2004-08-21 03:47:04.000000000 +0300
++++ /tmp/global_header.tpl	2005-09-10 17:37:46.000000000 +0300
+@@ -3,7 +3,8 @@
+ <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{config:language}">
+ <head>
+ 	<title>{words:index of} {info:dir}</title>
+-	<link href="{config:template}default.css" rel="stylesheet" title="AutoIndex Default" type="text/css" />
++	<link href="{config:template_path}default.css" rel="stylesheet" title="AutoIndex Default" type="text/css" />
++	<link href="{config:template_path}alternate.css" rel="alternate stylesheet" title="AutoIndex Alternate" type="text/css" />
+ </head>
+ 
+ <body class="autoindex_body">
+--- ./config.php	2005-02-10 02:59:20.000000000 +0200
++++ /tmp/config.php	2005-09-10 17:42:07.000000000 +0300
+@@ -200,14 +200,15 @@
+ //list of default settings
+ $settings = array(
+ 	'base_dir' => './',
+-	'icon_path' => 'index_icons/winxp/',
++	'icon_path' => '/AutoIndex/index_icons/winxp/',
+ 	'language' => 'en',
+-	'template' => './templates/default/',
++	'template' => '/usr/share/AutoIndex/templates/default/',
++	'template_path' => '/AutoIndex/templates/default/',
+ 	'log_file' => 'false',
+ 	'description_file' => 'false',
+ 	'user_list' => '.htpasswd.autoindex',
+ 	'download_count' => 'false',
+-	'hidden_files' => 'hidden_files',
++	'hidden_files' => '/etc/AutoIndex/hidden_files',
+ 	'banned_list' => 'false',
+ 	'show_dir_size' => 'true',
+ 	'use_login_system' => 'false',
+--- ./config.php	2005-09-10 17:42:41.000000000 +0300
++++ /tmp/config.php	2005-09-10 17:45:54.000000000 +0300
+@@ -35,7 +35,7 @@
+ 	die();
+ }
+ 
+-$strings = array('base_dir', 'icon_path', 'language', 'template', 'log_file',
++$strings = array('base_dir', 'icon_path', 'language', 'template', 'template_path', 'log_file',
+ 	'description_file', 'user_list', 'download_count', 'hidden_files',
+ 	'banned_list');
+ $checkboxes = array('show_dir_size', 'use_login_system', 'force_download',
+@@ -350,6 +350,14 @@
+ 
+ <p />
+ <table width="650" cellpadding="8"><tr><td>
++Template Path: <input type="text" name="template_path" value="<?php if ($settings['template_path'] != 'false') echo $settings['template_path']; ?>" />
++<p class="small">
++	This is the path where the *.tpl template files are located (relative to the web page).
++</p>
++</td></tr></table>
++
++<p />
++<table width="650" cellpadding="8"><tr><td>
+ <input type="checkbox" name="use_login_system" value="true"<?php if ($settings['use_login_system'] != 'false') echo ' checked="checked"'; ?> /> Enable Login System
+ <br /><input type="checkbox" name="must_login_to_download" value="true"<?php if ($settings['must_login_to_download'] != 'false') echo ' checked="checked"'; ?> /> Users must login to view/download
+ <br />User List: <input type="text" name="user_list" value="<?php if ($settings['user_list'] != 'false') echo $settings['user_list']; ?>" />
