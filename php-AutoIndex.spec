@@ -12,7 +12,7 @@ Source0:	http://dl.sourceforge.net/autoindex/%{name}-%{version}.tar.gz
 URL:		http://autoindex.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.221
 Requires:	apache >= 1.3.33-2
-Requires:	php > 5.0.0
+Requires:	php > 3:5.0.0
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
