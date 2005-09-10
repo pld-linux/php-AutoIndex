@@ -1,20 +1,28 @@
-# TODO: 1. How to deal with generated via web AutoIndex.conf.php file? (now - manually ;)
-#	
+# TODO
+# - rename spec
+%define		_appname AutoIndex
 Summary:	A Website Directory Indexer and File Manager (AutoIndex PHP Script)
 Summary(pl):	Webowy indeks zawarto¶ci katagów i zarz±dca plików (AutoIndex PHP Script)
-Name:		AutoIndex
+Name:		php-AutoIndex
 Version:	2.1.1
-Release:	0.1
+Release:	0.7
 License:	GPL
 Group:		Applications/Networking
-Source0:	http://dl.sourceforge.net/autoindex/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/autoindex/%{_appname}-%{version}.tar.gz
 # Source0-md5:	e9a16ea877a0d1b790216ae22ab19172
+Source1:	%{name}.php
+Patch0:		%{name}-config.patch
 URL:		http://autoindex.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.221
 Requires:	apache >= 1.3.33-2
 Requires:	php > 3:5.0.0
+Obsoletes:	AutoIndex
+Obsoletes:	php4-AutoIndex
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_sysconfdir	/etc/%{_appname}
+%define		_appdir		%{_datadir}/%{_appname}
 
 %description
 A Website Directory Indexer and File Manager (AutoIndex PHP Script).
@@ -23,40 +31,66 @@ A Website Directory Indexer and File Manager (AutoIndex PHP Script).
 Webowy indeks zawarto¶ci katalogów i zarz±dca plików (AutoIndex PHP
 Script).
 
-%define	_sysconfdir	/etc/%{name}
-%define	_appdir		%{_datadir}/%{name}
-
 %prep
-%setup -q -n %{name}
+%setup -q -n %{_appname}
+%patch0 -p1
+rm -f license.html # GPL
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdir},%{_sysconfdir}}
 
-cp -a * $RPM_BUILD_ROOT%{_appdir}
+cp -a *.php classes index_icons languages templates $RPM_BUILD_ROOT%{_appdir}
+cp -a hidden_files $RPM_BUILD_ROOT%{_sysconfdir}
 
-echo "Alias /index %{_appdir}" > $RPM_BUILD_ROOT%{_sysconfdir}/apache-%{name}.conf
-#%%: > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.conf.php
-#ln -sf %{_sysconfdir}/%{name}.conf.php $RPM_BUILD_ROOT%{_appdir}/%{name}.conf.php
+cat <<'EOF'> $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+Alias /AutoIndex %{_appdir}
+
+<Directory %{_appdir}>
+	<IfModule mod_access.c>
+	order allow,deny
+	allow from all
+	</IfModule>
+</Directory>
+# vim: filetype=apache ts=4 sw=4 et
+EOF
+
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/%{_appname}.conf.php
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post
+if [ "$1" = 1 ]; then
+%banner -e %{name} <<EOF
+- To use AutoIndex in your website, call it from php script:
+  require '%{_appdir}/index.php';
+  and copy (or symlink) %{_sysconfdir}/%{_appname}.conf.php to the
+  script dir.
+
+- For opening config file generation screen, open URL:
+  http://yoursite.example.org/AutoIndex/
+
+EOF
+fi
+
 %triggerin -- apache1 >= 1.3.33-2
-%apache_config_install -v 1 -c %{_sysconfdir}/apache-%{name}.conf
+%apache_config_install -v 1 -c %{_sysconfdir}/apache.conf
 
 %triggerun -- apache1 >= 1.3.33-2
 %apache_config_uninstall -v 1
 
 %triggerin -- apache >= 2.0.0
-%apache_config_install -v 2 -c %{_sysconfdir}/apache-%{name}.conf
+%apache_config_install -v 2 -c %{_sysconfdir}/apache.conf
 
 %triggerun -- apache >= 2.0.0
 %apache_config_uninstall -v 2
 
 %files
 %defattr(644,root,root,755)
-%attr(750,root,http) %dir %{_sysconfdir}
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache-%{name}.conf
-#%%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}.conf.php
+%doc *.html
+%attr(751,root,http) %dir %{_sysconfdir}
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
+%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.php
+%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/hidden_files
 %{_appdir}
