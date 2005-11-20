@@ -14,10 +14,11 @@ Source1:	%{name}.php
 Patch0:		%{name}-config.patch
 URL:		http://autoindex.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.221
-Requires:	apache >= 1.3.33-2
+Requires:	webserver = apache
 Requires:	php > 3:5.0.0
 Obsoletes:	AutoIndex
 Obsoletes:	php4-AutoIndex
+Conflicts:	apache1 < 1.3.33-2
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
