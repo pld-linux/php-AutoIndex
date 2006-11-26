@@ -1,11 +1,9 @@
-# TODO
-# - rename spec
 %define		_appname AutoIndex
 Summary:	A Website Directory Indexer and File Manager (AutoIndex PHP Script)
 Summary(pl):	Webowy indeks zawarto¶ci katagów i zarz±dca plików (AutoIndex PHP Script)
 Name:		php-AutoIndex
 Version:	2.2.0
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Applications/Networking
 Source0:	http://dl.sourceforge.net/autoindex/%{_appname}-%{version}.tar.gz
@@ -14,8 +12,9 @@ Source1:	%{name}.php
 Patch0:		%{name}-config.patch
 URL:		http://autoindex.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.221
+Requires:	php-common >= 4:5.0.0
 Requires:	webserver = apache
-Requires:	php > 3:5.0.0
+Requires:	webserver(php)
 Obsoletes:	AutoIndex
 Obsoletes:	php4-AutoIndex
 Conflicts:	apache1 < 1.3.33-2
