@@ -1,6 +1,6 @@
 %define		_appname AutoIndex
 Summary:	A Website Directory Indexer and File Manager (AutoIndex PHP Script)
-Summary(pl):	Webowy indeks zawarto禼i katag體 i zarz眃ca plik體 (AutoIndex PHP Script)
+Summary(pl.UTF-8):   Webowy indeks zawarto艣ci katag贸w i zarz膮dca plik贸w (AutoIndex PHP Script)
 Name:		php-AutoIndex
 Version:	2.2.0
 Release:	0.2
@@ -27,8 +27,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 A Website Directory Indexer and File Manager (AutoIndex PHP Script).
 
-%description -l pl
-Webowy indeks zawarto禼i katalog體 i zarz眃ca plik體 (AutoIndex PHP
+%description -l pl.UTF-8
+Webowy indeks zawarto艣ci katalog贸w i zarz膮dca plik贸w (AutoIndex PHP
 Script).
 
 %prep
