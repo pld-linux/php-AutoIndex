@@ -12,6 +12,7 @@ Source1:	%{name}.php
 Patch0:		%{name}-config.patch
 URL:		http://autoindex.sourceforge.net/
 BuildRequires:	rpmbuild(macros) >= 1.221
+BuildRequires:	migrate-to-webapps
 Requires:	php-common >= 4:5.0.0
 Requires:	webserver = apache
 Requires:	webserver(php)
